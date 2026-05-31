@@ -1,6 +1,6 @@
 # India Governance & Budget Dashboard
 
-**🔴 Live demo:** https://apoorvkhanna.github.io/govt-dashboard/
+**🔴 Live demo:** [apoorvkhanna.github.io/govt-dashboard](https://apoorvkhanna.github.io/govt-dashboard/)
 
 An interactive, single-page dashboard combining two views of Indian governance behind a simple **tabbed interface**:
 
@@ -27,34 +27,33 @@ python3 -m http.server 8000
 # Node (npx, no install)
 npx serve .
 
-# VS Code
-# Install the "Live Server" extension, then right-click index.html → "Open with Live Server"
+# VS Code: install the "Live Server" extension,
+# then right-click index.html -> "Open with Live Server"
 ```
 
 Then open <http://localhost:8000> in your browser.
 
 ## Constituency map data
 
-The boundary file [`india_pc_2024.geojson`](india_pc_2024.geojson) (~6 MB, 540 constituencies) is **included** in this repo. It is the simplified parliamentary-constituency boundary set from [DataMeet](https://github.com/datameet/maps) — boundaries are unchanged for 2024 (no delimitation has occurred since).
+The boundary file [`india_pc_2024.geojson`](india_pc_2024.geojson) (~5 MB, 542 constituencies) is **included** in this repo. It is the simplified parliamentary-constituency boundary set from [DataMeet](https://github.com/datameet/maps) (`parliamentary-constituencies/india_pc_2019_simplified.geojson`) — boundaries are unchanged for 2024, since no delimitation has occurred since.
 
-> The source file shipped with ~17 malformed rows (a header string leaked into the `PC_NAME` field, pushing the real constituency name into `ST_NAME`). These were repaired/cleaned before committing, so names like **Varanasi** and **Wayanad** resolve correctly.
-
-Each feature's `properties` contains:
+Each feature's `properties` contains only:
 
 - `PC_NAME` — the constituency name (e.g. `"Varanasi"`)
-- `ST_NAME` — the state name
 - `PC_ID` — numeric id
 
-Constituency names that match a key in the `mpDatabase` object in [`script.js`](script.js) (currently `Varanasi` and `Wayanad` as samples) show full MP details; others show a "Data pending update" placeholder. Extend `mpDatabase` to add more MPs.
+This file has **no state field**, so [`script.js`](script.js) supplies the state for the constituencies it has MP data for (via the `stateByPC` map) and shows a dash (`—`) for any other clicked constituency. If you swap in a richer GeoJSON that includes `ST_NAME`/`st_name`, the sidebar uses that automatically.
+
+Constituency names that match a key in the `mpDatabase` object in [`script.js`](script.js) (currently `Varanasi` and `Wayanad` as samples) show full MP details; others show a "Data pending update" placeholder. Extend `mpDatabase` (and `stateByPC`) to add more MPs.
 
 ## Project structure
 
-```
+```text
 .
 ├── index.html              # Tab layout + script/style includes
 ├── style.css               # Tabs, map/sidebar layout, Sankey container
 ├── script.js               # Tab switching, Leaflet map, Plotly Sankey
-├── india_pc_2024.geojson   # Constituency boundaries (DataMeet, cleaned)
+├── india_pc_2024.geojson   # Constituency boundaries (DataMeet, simplified)
 └── README.md
 ```
 

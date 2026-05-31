@@ -42,11 +42,19 @@ const mpDatabase = {
     }
 };
 
+// The boundary file carries the constituency name (PC_NAME) but no state field,
+// so we supply the state for the constituencies we have MP data for. Any other
+// clicked constituency falls back to a dash.
+const stateByPC = {
+    "Varanasi": "Uttar Pradesh",
+    "Wayanad": "Kerala"
+};
+
 function onFeatureClick(e) {
     const layer = e.target;
     const properties = layer.feature.properties;
     const constituencyName = properties.PC_NAME;
-    const stateName = properties.ST_NAME;
+    const stateName = properties.ST_NAME || properties.st_name || stateByPC[constituencyName] || "—";
 
     map.eachLayer(l => {
         if (l.options && l.options.color === 'red') l.setStyle({ color: '#3388ff', weight: 1, fillOpacity: 0.2 });
