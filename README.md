@@ -35,16 +35,16 @@ Then open <http://localhost:8000> in your browser.
 
 ## Constituency map data
 
-The boundary file [`india_pc_2024.geojson`](india_pc_2024.geojson) (~5 MB, 542 constituencies) is **included** in this repo. It is the simplified parliamentary-constituency boundary set from [DataMeet](https://github.com/datameet/maps) (`parliamentary-constituencies/india_pc_2019_simplified.geojson`) — boundaries are unchanged for 2024, since no delimitation has occurred since.
+The boundary file [`india_pc_2024.geojson`](india_pc_2024.geojson) (~1.9 MB, 543 constituencies, all with polygon geometry) is **included** in this repo. It is the simplified parliamentary-constituency boundary set from [DataMeet](https://github.com/datameet/maps) (`parliamentary-constituencies/india_pc_2019_simplified.geojson`) — boundaries are unchanged for 2024, since no delimitation has occurred since.
 
-Each feature's `properties` contains only:
+Each feature's `properties` uses **lowercase** keys; the ones the app reads are:
 
-- `PC_NAME` — the constituency name (e.g. `"Varanasi"`)
-- `PC_ID` — numeric id
+- `pc_name` — the constituency name (e.g. `"Varanasi"`)
+- `st_name` — the state name (e.g. `"Uttar Pradesh"`)
 
-This file has **no state field**, so [`script.js`](script.js) supplies the state for the constituencies it has MP data for (via the `stateByPC` map) and shows a dash (`—`) for any other clicked constituency. If you swap in a richer GeoJSON that includes `ST_NAME`/`st_name`, the sidebar uses that automatically.
+(The file also carries `pc_id`, `pc_no`, `st_code`, `pc_category`, `pc_name_hi`, `wikidata_qid`, and 2019-election metadata.)
 
-Constituency names that match a key in the `mpDatabase` object in [`script.js`](script.js) (currently `Varanasi` and `Wayanad` as samples) show full MP details; others show a "Data pending update" placeholder. Extend `mpDatabase` (and `stateByPC`) to add more MPs.
+Constituency names that match a key in the `mpDatabase` object in [`script.js`](script.js) (currently `Varanasi` and `Wayanad` as samples) show full MP details; every other constituency is still clickable and shows its name + state with a "Data pending update" placeholder. Extend `mpDatabase` to add more MPs.
 
 ## Project structure
 
