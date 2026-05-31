@@ -46,7 +46,7 @@ function onFeatureClick(e) {
     const layer = e.target;
     const properties = layer.feature.properties;
     const constituencyName = properties.PC_NAME;
-    const stateName = properties.STATE_NAME;
+    const stateName = properties.ST_NAME;
 
     map.eachLayer(l => {
         if (l.options && l.options.color === 'red') l.setStyle({ color: '#3388ff', weight: 1, fillOpacity: 0.2 });

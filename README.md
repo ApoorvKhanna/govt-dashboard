@@ -1,8 +1,10 @@
 # India Governance & Budget Dashboard
 
+**🔴 Live demo:** https://apoorvkhanna.github.io/govt-dashboard/
+
 An interactive, single-page dashboard combining two views of Indian governance behind a simple **tabbed interface**:
 
-1. **🗺️ Constituency Map** — a [Leaflet.js](https://leafletjs.com/) map of Indian parliamentary constituencies. Click a constituency to see the MP's details and key work in a sidebar.
+1. **🗺️ Constituency Map** — a [Leaflet.js](https://leafletjs.com/) map of India's parliamentary constituencies. Click a constituency to see the MP's details and key work in a sidebar.
 2. **💸 Budget Cash Flow** — a [Plotly.js](https://plotly.com/javascript/) **Sankey diagram** visualizing fiscal federalism: how money flows from revenue sources (taxes) into the Centre and State pools, and then down to Local bodies and final expenditures.
 
 > The budget figures are **hypothetical relative proportions** intended to illustrate the *concept* of devolution and expenditure — not official accounting.
@@ -16,9 +18,7 @@ An interactive, single-page dashboard combining two views of Indian governance b
 
 ## Running locally
 
-The constituency map fetches a local GeoJSON file (`india_pc_2024.geojson`) via `fetch()`, which browsers block when opening `index.html` directly from the filesystem (`file://`). **You must serve the folder over HTTP.**
-
-Pick any one of these:
+The constituency map fetches a local GeoJSON file (`india_pc_2024.geojson`) via `fetch()`, which browsers block when opening `index.html` directly from the filesystem (`file://`). **Serve the folder over HTTP:**
 
 ```bash
 # Python 3
@@ -33,29 +33,33 @@ npx serve .
 
 Then open <http://localhost:8000> in your browser.
 
-## Adding the constituency map data
+## Constituency map data
 
-This repo does **not** include the boundary file. To make the map interactive, add a GeoJSON of India's 2024 parliamentary constituencies to the project root as:
+The boundary file [`india_pc_2024.geojson`](india_pc_2024.geojson) (~6 MB, 540 constituencies) is **included** in this repo. It is the simplified parliamentary-constituency boundary set from [DataMeet](https://github.com/datameet/maps) — boundaries are unchanged for 2024 (no delimitation has occurred since).
 
-```
-india_pc_2024.geojson
-```
+> The source file shipped with ~17 malformed rows (a header string leaked into the `PC_NAME` field, pushing the real constituency name into `ST_NAME`). These were repaired/cleaned before committing, so names like **Varanasi** and **Wayanad** resolve correctly.
 
-The code expects each feature's `properties` to contain:
+Each feature's `properties` contains:
 
 - `PC_NAME` — the constituency name (e.g. `"Varanasi"`)
-- `STATE_NAME` — the state name
+- `ST_NAME` — the state name
+- `PC_ID` — numeric id
 
-Constituency names that match a key in the `mpDatabase` object in [`script.js`](script.js) (currently `Varanasi` and `Wayanad` as samples) will show full MP details; others show a "Data pending update" placeholder. Extend `mpDatabase` to add more.
-
-Without the GeoJSON the page still loads — the map shows the base tiles and the Budget Cash Flow tab works fully; the console logs `"Map GeoJSON not loaded."`.
+Constituency names that match a key in the `mpDatabase` object in [`script.js`](script.js) (currently `Varanasi` and `Wayanad` as samples) show full MP details; others show a "Data pending update" placeholder. Extend `mpDatabase` to add more MPs.
 
 ## Project structure
 
 ```
 .
-├── index.html   # Tab layout + script/style includes
-├── style.css    # Tabs, map/sidebar layout, Sankey container
-├── script.js    # Tab switching, Leaflet map, Plotly Sankey
+├── index.html              # Tab layout + script/style includes
+├── style.css               # Tabs, map/sidebar layout, Sankey container
+├── script.js               # Tab switching, Leaflet map, Plotly Sankey
+├── india_pc_2024.geojson   # Constituency boundaries (DataMeet, cleaned)
 └── README.md
 ```
+
+## Data & disclaimer
+
+- Constituency boundaries: [DataMeet/maps](https://github.com/datameet/maps) (Creative Commons).
+- MP details in `mpDatabase` are illustrative samples.
+- Budget figures in the Sankey diagram are **hypothetical relative proportions** to illustrate the concept of fiscal devolution — not official accounting.
