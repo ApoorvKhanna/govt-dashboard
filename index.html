@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Governance & Budget Dashboard</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'mp-tab')">🗺️ Constituency Map</button>
+        <button class="tab-btn" onclick="switchTab(event, 'budget-tab')">💸 Budget Cash Flow</button>
+    </div>
+
+    <!-- TAB 1: Constituency Map -->
+    <div id="mp-tab" class="tab-content active">
+        <div class="map-container">
+            <!-- Map -->
+            <div id="map"></div>
+            <!-- Information Sidebar -->
+            <div id="sidebar">
+                <h2>Constituency Details</h2>
+                <p class="placeholder">Click on a constituency on the map to see the MP's details.</p>
+
+                <div id="mp-info" class="hidden">
+                    <h3 id="constituency-name"></h3>
+                    <p><strong>State:</strong> <span id="state-name"></span></p>
+                    <hr>
+                    <div class="card">
+                        <h4 id="mp-name"></h4>
+                        <p class="party" id="mp-party"></p>
+                        <h5>Key Work & Achievements:</h5>
+                        <ul id="mp-achievements"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: Budget Cash Flow -->
+    <div id="budget-tab" class="tab-content">
+        <div class="budget-container">
+            <h2>Fiscal Federalism: How Money Flows in India</h2>
+            <p>A high-level simulation of revenue collection, devolution, and expenditure across Centre, State, and Local tiers.</p>
+            <!-- Sankey Chart Container -->
+            <div id="sankey-chart"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

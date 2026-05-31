@@ -1,0 +1,103 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f6f8;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Tab Navigation */
+.tab-nav {
+    background: #2c3e50;
+    padding: 10px 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.tab-btn {
+    background: #34495e;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.tab-btn:hover {
+    background: #3b5998;
+}
+
+.tab-btn.active {
+    background: #3498db;
+    font-weight: bold;
+}
+
+/* Tab Content Areas */
+.tab-content {
+    display: none;
+    flex: 1; /* Take up remaining height */
+    height: calc(100vh - 60px);
+}
+
+.tab-content.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Map Layout */
+.map-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+#map {
+    flex: 2;
+    height: 100%;
+    z-index: 1;
+}
+
+#sidebar {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    max-width: 400px;
+}
+
+/* Budget Layout */
+.budget-container {
+    padding: 30px;
+    background: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.budget-container h2 { margin-bottom: 10px; color: #2c3e50; }
+.budget-container p { margin-bottom: 20px; color: #7f8c8d; }
+
+#sankey-chart {
+    flex: 1;
+    width: 100%;
+    min-height: 500px;
+}
+
+/* Typography & Cards */
+.placeholder { color: #666; font-style: italic; }
+.hidden { display: none; }
+hr { border: 0; height: 1px; background: #eee; margin: 15px 0; }
+.card { background: #f9f9f9; padding: 15px; border-radius: 8px; border-left: 4px solid #3498db; }
+#mp-name { font-size: 1.2rem; color: #2c3e50; margin-bottom: 5px; }
+.party { font-weight: bold; color: #555; margin-bottom: 15px; }
+#mp-achievements { padding-left: 20px; color: #444; line-height: 1.5; }
+#mp-achievements li { margin-bottom: 8px; }
